@@ -1,0 +1,47 @@
+
+<div class="form-container">
+  <h2>Hi {{username}} </h2>
+  <div>
+    <button #logoutBtn>Logout</button>
+    <button #usersBtn>Get Users</button>
+  </div>
+  <div class="main-container">
+    <div class="chat-container" >
+      <div class="messages-list" #messagesContainer>
+        <div class="messages" *ngFor="let message of messages">
+          <div class="message" key={message.id}>
+            <div class="message-content">
+              <div class="message-username">
+                <b>{{message.username}}</b>
+              </div>
+              <div class="message-text">
+                {{message.message}}
+              </div>
+            </div>
+            <div class="create-at">
+              {{setDateTime(message.created_at)}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-container">
+        <input type="text" placeholder="Type your message" [(ngModel)]="message" (keyup.enter)="sendMessage()">
+        <button (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+    <div class="users-container">
+      <div class="user-head"><b>Users</b></div>
+      <div class="users-list">
+        <div class="users" *ngFor="let user of users">
+          <div class="user" key={message.id}>
+            <div class="user-name">
+              <b>{{user.username}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

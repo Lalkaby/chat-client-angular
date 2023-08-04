@@ -1,0 +1,24 @@
+<h1>Login</h1>
+<div class="form-container">
+  <div class="form-group">
+    <label for="serverUrl">Server URL:</label>
+    <input class="" type="text" id="serverUrl" [formControl]="serverUrlControl">
+    <small *ngIf="serverUrlControl.invalid && (serverUrlControl.dirty || serverUrlControl.touched)">
+      Server URL is required
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="port">Port:</label>
+    <input class=""  type="number" id="port" [formControl]="portControl">
+    <small *ngIf="portControl.invalid && (portControl.dirty || portControl.touched)">
+      Port is required and should be between 0 and 65535
+    </small>
+  </div>
+
+<div class="form-group">
+  <label for="username"> Username:</label>
+  <input type="text" id="username" [formControl]="usernameControl">
+</div>
+  <button class="button" #loginBtn [disabled]="serverUrlControl.invalid || portControl.invalid">Login</button>
+</div>
