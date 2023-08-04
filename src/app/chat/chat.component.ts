@@ -40,8 +40,10 @@ export class ChatComponent {
     {
       firstValueFrom(this.apiService.getMessages())
         .then( (data)=> {
+          data=data.sort((a:Message, b:Message) => a.created_at - b.created_at);
           if(JSON.stringify(this.messages) !== JSON.stringify(data)){
-          this.messages = data.sort((a:Message, b:Message) => a.created_at - b.created_at);
+            this.messages = data;
+            this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
         }
         })
         .catch((error) => console.error(error));
