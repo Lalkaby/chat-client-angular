@@ -41,7 +41,7 @@ export class ChatComponent {
       firstValueFrom(this.apiService.getMessages())
         .then( (data)=> {
           if(JSON.stringify(this.messages) !== JSON.stringify(data)){
-          this.messages = data;
+          this.messages = data.sort((a:Message, b:Message) => a.created_at - b.created_at);
         }
         })
         .catch((error) => console.error(error));
