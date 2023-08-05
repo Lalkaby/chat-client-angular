@@ -31,20 +31,16 @@ export class ChatComponent {
   }
 
   ngOnInit(){
-    window.addEventListener('beforeunload', () => {
-      this.apiService.logout();
-    });
-
-
     this.messagesFetchInterval = setInterval(()=>
     {
       firstValueFrom(this.apiService.getMessages())
-        .then( (data)=> {
-          data=data.sort((a:Message, b:Message) => a.created_at - b.created_at);
-          if(JSON.stringify(this.messages) !== JSON.stringify(data)){
+        .then( async (data) => {
+          data = data.sort((a: Message, b: Message) => a.created_at - b.created_at);
+          if (JSON.stringify(this.messages) !== JSON.stringify(data)) {
             this.messages = data;
+            await new Promise((resolve) => setTimeout(resolve, 100));
             this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
-        }
+          }
         })
         .catch((error) => console.error(error));
     },1000);
@@ -75,7 +71,6 @@ export class ChatComponent {
   sendMessage(){
     if (this.message == '' || this.sentMessage) return;
     this.sentMessage = true;
-    this.messages.push({ message: this.message, username: this.username, created_at: Date.now()});
     firstValueFrom(this.apiService.postMessage(this.message))
       .then(() => {
         this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
@@ -99,7 +94,6 @@ export class ChatComponent {
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const formattedDate = `${hours}:${minutes}`;
-
     return formattedDate ;
   }
 }
